@@ -1,0 +1,3 @@
+namespace CardGame.Engine.Board
+{
+}
