@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "CardGame.ConsoleTest/1.0.0": {
+        "dependencies": {
+          "CardGame.Engine": "1.0.0"
+        },
+        "runtime": {
+          "CardGame.ConsoleTest.dll": {}
+        }
+      },
+      "CardGame.Engine/1.0.0": {
+        "runtime": {
+          "CardGame.Engine.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CardGame.ConsoleTest/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CardGame.Engine/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

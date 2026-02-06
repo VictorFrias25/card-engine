@@ -8,24 +8,19 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Victor\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\VPC\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Victor\\Desktop\\card-engine\\CardGame.Engine\\CardGame.Engine.csproj",
+      "projectUniqueName": "D:\\git\\card-engine\\CardGame.Engine\\CardGame.Engine.csproj",
       "projectName": "CardGame.Engine",
-      "projectPath": "C:\\Users\\Victor\\Desktop\\card-engine\\CardGame.Engine\\CardGame.Engine.csproj",
-      "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Victor\\Desktop\\card-engine\\CardGame.Engine\\obj\\",
+      "projectPath": "D:\\git\\card-engine\\CardGame.Engine\\CardGame.Engine.csproj",
+      "packagesPath": "C:\\Users\\VPC\\.nuget\\packages\\",
+      "outputPath": "D:\\git\\card-engine\\CardGame.Engine\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\VPC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -33,7 +28,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

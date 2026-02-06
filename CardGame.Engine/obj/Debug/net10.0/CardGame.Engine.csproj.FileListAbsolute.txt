@@ -1,0 +1,12 @@
+D:\git\card-engine\CardGame.Engine\bin\Debug\net10.0\CardGame.Engine.deps.json
+D:\git\card-engine\CardGame.Engine\bin\Debug\net10.0\CardGame.Engine.dll
+D:\git\card-engine\CardGame.Engine\bin\Debug\net10.0\CardGame.Engine.pdb
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\CardGame.Engine.GeneratedMSBuildEditorConfig.editorconfig
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\CardGame.Engine.AssemblyInfoInputs.cache
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\CardGame.Engine.AssemblyInfo.cs
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\CardGame.Engine.csproj.CoreCompileInputs.cache
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\CardGame.Engine.sourcelink.json
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\CardGame.Engine.dll
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\refint\CardGame.Engine.dll
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\CardGame.Engine.pdb
+D:\git\card-engine\CardGame.Engine\obj\Debug\net10.0\ref\CardGame.Engine.dll
