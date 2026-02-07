@@ -63,19 +63,39 @@ namespace CardGame.Engine.Core
             // "Archer... Requires 1 elemental specific energy" - Defined as Neutral in doc? 
             // Doc says: "Archer ... Types: Requires 1 elemental specific energy. Fire, Water."
             // So we likely need specific Archers or just a generic one that adapts.
-            // Let's create specific ones as per the deck list "Archer of the Flame", "Archer of the Ocean"
-            
+            // Archer of the Flame
             Definitions.Add(new CardDefinition("Archer of the Flame", Element.Fire, CardType.Attacker)
             {
                 MaxHealth = 80,
                 Defense = 40,
-                BaseAttack = 20
+                BaseAttack = 20,
+                AttackScaling = new[] { 5, 5, 5 }, // +5 steps
+                MaxEnergy = 4, // "Up to 35" means 20+15? Or implicit. User said "+5=25, +5=30, +5=35", so max 3 scaling steps effectively.
+                               // But user said "up to +5 for 35", so 20+5+5+5=35.
+                AllowMixedEnergy = true,
+                
+                // Bonus Logic: 50% to do bonus 10 dmg to different target
+                BonusDamageChance = 50,
+                BonusDamageAmount = 10,
+                BonusDamageThreshold = 3,
+                BonusRequiredElement = Element.Fire 
             });
-             Definitions.Add(new CardDefinition("Archer of the Ocean", Element.Water, CardType.Attacker)
+
+            // Archer of the Ocean
+            Definitions.Add(new CardDefinition("Archer of the Ocean", Element.Water, CardType.Attacker)
             {
                 MaxHealth = 80,
                 Defense = 40,
-                BaseAttack = 20
+                BaseAttack = 20,
+                AttackScaling = new[] { 5, 5, 5 },
+                MaxEnergy = 4,
+                AllowMixedEnergy = true,
+                
+                // Bonus Logic
+                BonusDamageChance = 50,
+                BonusDamageAmount = 10,
+                BonusDamageThreshold = 3,
+                BonusRequiredElement = Element.Water
             });
 
 
@@ -85,14 +105,39 @@ namespace CardGame.Engine.Core
             {
                 MaxHealth = 100,
                 Defense = 50,
-                BaseAttack = 15
+                BaseAttack = 15,
+                AttackScaling = new[] { 5, 10, 5, 10 },
+                MaxEnergy = 4,
+                AllowMixedEnergy = true,
+                
+                // On-Attack Active Effect (Lvl 4)
+                OnAttackEffect = OnAttackEffectType.SearchEnergyChance,
+                OnAttackEffectChance = 50,
+                
+                AbilityUnlockThreshold = 4,
+                AbilitySpecificEnergyReq = 2, // Requires 2 Air Energies
+                BonusRequiredElement = Element.Air // For Passive Bonus checking
             });
+
              Definitions.Add(new CardDefinition("Earth Warrior", Element.Earth, CardType.Attacker)
             {
                 MaxHealth = 100,
                 Defense = 50,
-                BaseAttack = 15
+                BaseAttack = 15,
+                AttackScaling = new[] { 5, 10, 5, 10 },
+                MaxEnergy = 4,
+                AllowMixedEnergy = true,
+                
+                // On-Attack Active Effect (Lvl 4)
+                OnAttackEffect = OnAttackEffectType.SearchEnergyChance,
+                OnAttackEffectChance = 50,
+                
+                AbilityUnlockThreshold = 4,
+                AbilitySpecificEnergyReq = 2, // Requires 2 Earth Energies
+                BonusRequiredElement = Element.Earth
             });
+
+
 
 
             // --- Energies ---

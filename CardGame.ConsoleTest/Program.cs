@@ -30,7 +30,7 @@ namespace CardGame.ConsoleTest
             var p2 = new Player(2, 1000, GenerateDeck(2));
             var game = new Game(p1, p2);
 
-            game.StartGame();
+            game.StartGame(false); // Disable shuffle for deterministic testing
 
             while (true)
             {
@@ -41,6 +41,7 @@ namespace CardGame.ConsoleTest
                 Console.WriteLine(" [num]: Play Card from Hand (e.g. 0)");
                 Console.WriteLine(" 'e'+[card]+[target]: Attach Energy (e.g. e00)");
                 Console.WriteLine(" 'a'+[source]+[target]: Attack (e.g. a0p or a01)");
+                Console.WriteLine(" 'u'+[source]+[target]: Use Ability (e.g. u01)");
                 Console.WriteLine(" 'n': End Turn");
                 Console.WriteLine(" 'q': Quit");
                 
@@ -53,6 +54,31 @@ namespace CardGame.ConsoleTest
                 {
                     game.EndTurn();
                     continue;
+                }
+                
+                if (input.StartsWith("u"))
+                {
+                     // Format: u[source][target]
+                     if (input.Length >= 3 && 
+                        int.TryParse(input.Substring(1, 1), out int sourceIdx) &&
+                        int.TryParse(input.Substring(2, 1), out int targetIdx))
+                    {
+                        var player = game.CurrentPlayer;
+                        if (sourceIdx >= 0 && sourceIdx < player.ActiveAttackers.Count &&
+                            targetIdx >= 0 && targetIdx < player.ActiveAttackers.Count)
+                        {
+                            var source = player.ActiveAttackers[sourceIdx];
+                            var target = player.ActiveAttackers[targetIdx];
+                            var action = new ActivateAbilityAction(source, target);
+                            
+                            if (action.IsValid(game))
+                            {
+                                action.Execute(game);
+                                // Turn check handled by action (it doesn't end it)
+                            }
+                            else Console.WriteLine("\n!!! Invalid Ability (Check requirements/target) !!!");
+                        }
+                    }
                 }
                 
                 if (input.StartsWith("e"))
@@ -176,11 +202,26 @@ namespace CardGame.ConsoleTest
         static List<Card> GenerateDeck(int playerId)
         {
             var cards = new List<Card>();
-             for (int i = 0; i < 3; i++) cards.Add(CardFactory.CreateCard("Grunt"));
-             for (int i = 0; i < 3; i++) cards.Add(CardFactory.CreateCard("Minion"));
-             for (int i = 0; i < 2; i++) cards.Add(CardFactory.CreateCard("Tank"));
-             for (int i = 0; i < 2; i++) cards.Add(CardFactory.CreateCard("Archer of the Flame"));
-             for (int i = 0; i < 10; i++) cards.Add(CardFactory.CreateCard("Fire Energy"));
+             
+             // Neutrals
+             cards.Add(CardFactory.CreateCard("Grunt"));
+             cards.Add(CardFactory.CreateCard("Tank"));
+             cards.Add(CardFactory.CreateCard("Minion"));
+             
+             // Archers (Fire/Water)
+             cards.Add(CardFactory.CreateCard("Archer of the Flame"));
+             cards.Add(CardFactory.CreateCard("Archer of the Ocean"));
+             
+             // Warriors (Air/Earth)
+             cards.Add(CardFactory.CreateCard("Air Warrior"));
+             cards.Add(CardFactory.CreateCard("Earth Warrior"));
+             
+             // Energies (Need all types)
+             for(int i=0; i<3; i++) cards.Add(CardFactory.CreateCard("Air Energy"));
+             for(int i=0; i<3; i++) cards.Add(CardFactory.CreateCard("Water Energy"));
+             for(int i=0; i<3; i++) cards.Add(CardFactory.CreateCard("Fire Energy"));
+             for(int i=0; i<3; i++) cards.Add(CardFactory.CreateCard("Earth Energy"));
+             
             return cards;
         }
 
@@ -195,6 +236,28 @@ namespace CardGame.ConsoleTest
 
         static void PrintPlayer(Player p, bool isActive)
         {
+            // Debug Logging for Verification
+            try {
+                using (var sw = System.IO.File.AppendText("verify.txt")) {
+                    sw.WriteLine($"--- VERIFY STEP ---");
+                    string status = isActive ? "*" : " ";
+                    sw.WriteLine($"{status} Player {p.Id}: HP={p.Shield} Deck={p.Deck.Count}");
+                    sw.WriteLine($"  Board: ");
+                    for (int i=0; i<p.ActiveAttackers.Count; i++)
+                    {
+                        var a = p.ActiveAttackers[i];
+                        string affinity = a.EnergyAffinity.HasValue ? a.EnergyAffinity.ToString() : "None";
+                        sw.WriteLine($"    [{i}] {a.Name} (HP:{a.CurrentHealth}/{a.MaxHealth} Def:{a.Defense} Atk:{a.GetCurrentAttack()} Aff:{affinity} E:{a.AttachedEnergies.Count})");
+                    }
+                    sw.WriteLine($"  Hand: {p.Hand.Count}");
+                    for (int i=0; i<p.Hand.Count; i++)
+                    {
+                         sw.WriteLine($"    [{i}] {p.Hand[i].Name}");
+                    }
+                    sw.WriteLine("");
+                }
+            } catch {}
+
             string statusConsole = isActive ? "*" : " ";
             Console.WriteLine($"{statusConsole} Player {p.Id}: HP={p.Shield} Deck={p.Deck.Count}");
             Console.WriteLine($"  Board: ");

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Collections.Generic;
 using CardGame.Engine.Core;
 using CardGame.Engine.GameFlow;
 
@@ -20,9 +21,11 @@ namespace CardGame.Engine.Actions
             var player = game.CurrentPlayer;
             if (!player.Hand.Contains(EnergyCard)) return false;
             
-            // "Can't play supercharger on attacker that has already had an energy attached to it that turn"
-            // The rule implies a limit. For now, enforcing 1 energy attachment per attacker per turn?
-            // "1 energy per attacker per turn"
+            // "Limit of 1 energy applied to attacker on board per turn"
+            if (game.EnergyAttachmentsThisTurn.ContainsKey(TargetAttacker.Id))
+            {
+                if (game.EnergyAttachmentsThisTurn[TargetAttacker.Id] >= 1) return false;
+            }
             
             // Check if target is on board
             if (!player.ActiveAttackers.Contains(TargetAttacker)) 
@@ -31,9 +34,6 @@ namespace CardGame.Engine.Actions
              if (!TargetAttacker.CanAttachEnergy(EnergyCard))
                 return false;
 
-            // TODO: Track if this attacker received energy this turn in Game state
-            // For now, assuming basic validity
-            
             return true;
         }
 
@@ -44,12 +44,17 @@ namespace CardGame.Engine.Actions
              TargetAttacker.AttachedEnergies.Add(EnergyCard);
              
              // If this is the first energy, set affinity
-             if (TargetAttacker.EnergyAffinity == null)
+             if (TargetAttacker.EnergyAffinity == null && !TargetAttacker.AllowMixedEnergy)
              {
                  TargetAttacker.EnergyAffinity = EnergyCard.Element;
              }
              
-             // TODO: Mark attacker as having received energy this turn
+             // Track usage
+            if (!game.EnergyAttachmentsThisTurn.ContainsKey(TargetAttacker.Id))
+            {
+                game.EnergyAttachmentsThisTurn[TargetAttacker.Id] = 0;
+            }
+            game.EnergyAttachmentsThisTurn[TargetAttacker.Id]++;
         }
     }
 }

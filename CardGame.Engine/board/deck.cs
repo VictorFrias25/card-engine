@@ -36,6 +36,16 @@ namespace CardGame.Engine.Board
             return card;
         }
 
+        public Card FindAndRemoveFirst(Func<Card, bool> predicate)
+        {
+            var card = _cards.FirstOrDefault(predicate);
+            if (card != null)
+            {
+                _cards.Remove(card);
+            }
+            return card;
+        }
+
         public int Count => _cards.Count;
     }
 }

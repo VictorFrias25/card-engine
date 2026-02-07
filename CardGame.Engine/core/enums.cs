@@ -21,7 +21,20 @@ namespace CardGame.Engine.Core
     {
         Deck,
         Hand,
+        Board,
         Discard,
-        Board
+        Lost
+    }
+
+    public enum ActiveAbilityType
+    {
+        None,
+        SearchEnergy // Keeping for now or removing?
+    }
+
+    public enum OnAttackEffectType
+    {
+        None,
+        SearchEnergyChance
     }
 }

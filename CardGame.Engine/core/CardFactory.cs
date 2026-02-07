@@ -14,7 +14,10 @@ namespace CardGame.Engine.Core
                     return new Attacker(def.Name, def.Element, def.MaxHealth, def.Defense, def.BaseAttack, 
                         def.AttackScaling, def.MaxEnergy, 
                         def.BonusDamageChance, def.BonusDamageAmount, def.BonusDamageThreshold,
-                        def.AbilityDamageMultiplier, def.AbilityEnergyCost);
+                        def.AbilityDamageMultiplier, def.AbilityEnergyCost,
+                        def.AllowMixedEnergy, def.BonusRequiredElement,
+                        def.ActiveAbility, def.AbilityUnlockThreshold, def.AbilitySpecificEnergyReq,
+                        def.OnAttackEffect, def.OnAttackEffectChance);
                 case CardType.Support:
                     // Assuming all supports from library are "Active" for now, or check def properties
                     bool isActive = def.SupportHealth > 0;
